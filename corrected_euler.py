@@ -1,13 +1,13 @@
 
 #INPUT
-# m = float(input("Введите m:\n"))
-# T0 = float(input("Введите T0:\n"))
-# dt= int(input("Введите шаг по времени:\n"))
-# ubound = int(input("Введите конечное время процесса:\n"))
-m = 0.0063
-T0 = 10000
-dt = 2
-ubound = 50
+m = float(input("Введите m:\n"))
+T0 = float(input("Введите T0:\n"))
+dt= int(input("Введите шаг по времени:\n"))
+ubound = int(input("Введите конечное время процесса:\n"))
+# m = 0.0063
+# T0 = 10000
+# dt = 2
+# ubound = 50
 
 
 
@@ -47,23 +47,23 @@ def euler1(m,y0,dt,f):
 #method = Ссылка на метод расчета значений(в данном случае исправленный метод эйлера
 #dt = Шаг расчета
 #ndigits = Количество знаков после запятой
-def generateValues(m,y0,f,method,dt,ndigits = 1):
+def generateValues(m,y0,f,method,dt):
     time_vals = range(0,ubound+dt,dt)
     yvals = []
     y = y0
     for t in time_vals:
         yvals.append(y)
-        y = round(method(m,y,dt,f),ndigits)
+        y = method(m,y,dt,f)
     return {'time_vals':time_vals,'y_vals':yvals}
 
 
 
 
 values = generateValues(m,T0,function,euler1,dt)
-
+ndigits = 2
 #OUTPUT
-for y,y in zip(values['time_vals'],values['y_vals']):
-    print("T:{},Y:{}".format(y,y))
+for t,y in zip(values['time_vals'],values['y_vals']):
+    print("time:{},T:{}".format(t,round(y,ndigits)))
     
 
 #OUTPUT TXT FILE
@@ -75,5 +75,5 @@ with open('result.txt','w',encoding="utf-8") as file_with_results:
     file_with_results.write("Конечное время процесса={}\n".format(ubound))
     file_with_results.write("\n")
     for t,y in zip(values['time_vals'],values['y_vals']):
-        file_with_results.write('Time:{};Y:{}\n'.format(t,y))
+        file_with_results.write('time:{};T:{}\n'.format(t,round(y,ndigits)))
 file_with_results.close()
