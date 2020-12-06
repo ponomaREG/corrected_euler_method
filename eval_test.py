@@ -1,0 +1,2 @@
+
+f = str(input("function"))

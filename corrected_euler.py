@@ -1,13 +1,13 @@
 
 #INPUT
-m = float(input("Введите m:\n"))
-T0 = float(input("Введите T0:\n"))
-dt= int(input("Введите шаг по времени:\n"))
-ubound = int(input("Введите конечное время процесса:\n"))
-# m = 0.0063
-# T0 = 10000
-# dt = 2
-# ubound = 50
+# m = float(input("Введите m:\n"))
+# T0 = float(input("Введите T0:\n"))
+# dt= int(input("Введите шаг по времени:\n"))
+# ubound = int(input("Введите конечное время процесса:\n"))
+m = 0.0063
+T0 = 10000
+dt = 2
+ubound = 50
 
 
 
@@ -22,17 +22,17 @@ def genRange(begin,end,step):
 
 
 #Исходная функция
-def function(x,y,t=0):
-    return -x*y
+def function(t,y,m):
+    return -m*y+t*t
 
 #Исправленный метод Эйлера
 #m = Коэф. Вводит пользователь
 #y0 = Начальное значение. Вводит пользователь
 #method = Ссылка на функцию производной(function)
 #dt = Шаг расчета
-def euler1(m,y0,dt,f):
-    k1 = f(m,y0)*dt
-    k2 = f(m,y0+k1)*dt
+def euler1(m,y0,t,dt,f):
+    k1 = f(t,y0,m)*dt
+    k2 = f(t+dt,y0+k1,m)*dt
     dy = (k1+k2)/2
     y1 = y0+dy
     return y1
@@ -51,9 +51,9 @@ def generateValues(m,y0,f,method,dt):
     time_vals = range(0,ubound+dt,dt)
     yvals = []
     y = y0
-    for t in time_vals:
+    for time in time_vals:
         yvals.append(y)
-        y = method(m,y,dt,f)
+        y = method(m,y,time,dt,f)
     return {'time_vals':time_vals,'y_vals':yvals}
 
 
